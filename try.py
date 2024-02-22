@@ -1,33 +1,67 @@
 import streamlit as st
 import requests
-import json
+import time
+from Adafruit_ADS1x15 import ADS1x15
+from mpu6050 import mpu6050
 
-# Function to fetch data from ThingSpeak
-def fetch_data():
-    url = 'https://api.thingspeak.com/channels/2203635/feeds.json?api_key=YOUR_API_KEY&results=1'
+# Initialize Flex Sensor and Accelerometer
+adc = ADS1x15(ic=ADS1x15.IC_ADS1015)
+sensor = mpu6050(0x68)
+
+# ThingSpeak Configuration
+WRITE_API_KEY = 'VRIE177CD367T7YR'
+READ_API_KEY = 'RLO328KCGVSX1VTR'
+CHANNEL_ID = '2442448'
+
+def read_flex_sensor():
+    # Read flex sensor value
+    flex_value = adc.read_adc(0, gain=1)
+    return flex_value
+
+def read_accelerometer():
+    # Read accelerometer data
+    accel_data = sensor.get_accel_data()
+    return accel_data['x'], accel_data['y'], accel_data['z']
+
+def send_to_thingspeak(flex_value, x_accel, y_accel, z_accel):
+    # Send data to ThingSpeak
+    url = f'https://api.thingspeak.com/update?api_key={WRITE_API_KEY}&field1={flex_value}&field2={x_accel}&field3={y_accel}&field4={z_accel}'
     response = requests.get(url)
-    data = json.loads(response.content)
-    return data['feeds'][0] if 'feeds' in data and len(data['feeds']) > 0 else None
+    if response.status_code == 200:
+        print("Data sent to ThingSpeak successfully")
+    else:
+        print("Failed to send data to ThingSpeak")
+
+def fetch_data_from_thingspeak():
+    # Fetch data from ThingSpeak
+    url = f'https://api.thingspeak.com/channels/{CHANNEL_ID}/feeds.json?api_key={READ_API_KEY}&results=1'
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        return data['feeds'][0]
+    else:
+        return None
 
 def main():
     st.title('Posture Management System')
 
-    # Fetch data from ThingSpeak
-    data = fetch_data()
-    
-    if data:
-        posture_angle = float(data.get('field1'))
-        # Display posture angle
-        st.write(f"Current posture angle: {posture_angle}")
+    while True:
+        flex_value = read_flex_sensor()
+        x_accel, y_accel, z_accel = read_accelerometer()
+        send_to_thingspeak(flex_value, x_accel, y_accel, z_accel)
+        time.sleep(15)  # Adjust the delay as needed
 
-        # Add condition to check posture and display appropriate message
-        if abs(posture_angle) > 30:
-            st.error("Poor posture detected! Please correct your posture.")
+        st.header('Current Data from ThingSpeak')
+        data = fetch_data_from_thingspeak()
+        if data:
+            st.write('Flex Sensor Value:', data['field1'])
+            st.write('X Acceleration:', data['field2'])
+            st.write('Y Acceleration:', data['field3'])
+            st.write('Z Acceleration:', data['field4'])
         else:
-            st.success("Good posture!")
-    else:
-        st.error("Failed to fetch data from ThingSpeak. Check your connection or try again later.")
+            st.write('Failed to fetch data from ThingSpeak')
 
 if __name__ == "__main__":
     main()
+
 
