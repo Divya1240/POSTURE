@@ -37,7 +37,7 @@ def view_patient_info():
         st.write('Contact: 555-1234')
 
 def main():
-    st.title('Healthcare System')
+    st.title('Posture detection System')
 
     task = st.sidebar.selectbox(
         'Task',
