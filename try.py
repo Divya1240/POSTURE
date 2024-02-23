@@ -19,7 +19,7 @@ def schedule_appointment():
         # Here you can perform actions like saving appointment data to a database
         st.success('Appointment scheduled successfully!')
 def view_patient_info():
-    st.subheader('View Patient Information')
+    st.subheader('View User Information')
     patient_id = st.text_input('User ID')
     if st.button('View'):
         # Here you can fetch patient information from a database and display it
