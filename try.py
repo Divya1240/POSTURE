@@ -1,7 +1,7 @@
 import streamlit as st
 
 def register_patient():
-    st.subheader('Patient Registration')
+    st.subheader('User Registration')
     name = st.text_input('Name')
     age = st.number_input('Age', min_value=0, max_value=150, step=1)
     gender = st.selectbox('Gender', ['Male', 'Female', 'Other'])
@@ -29,34 +29,17 @@ def view_patient_info():
 
     if st.button('View'):
         # Here you can fetch patient information from a database and display it
-        st.write(f'Patient ID: {patient_id}')
+        st.write(f'User ID: {patient_id}')
         st.write('Name: John Doe')
         st.write('Age: 35')
         st.write('Gender: Male')
         st.write('Address: 123 Main St')
         st.write('Contact: 555-1234')
 
-def main():
-    st.title("Accelerometer Data Display")
-
-    # Assuming you have the accelerometer data as a dictionary
-    accelerometer_data = {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-    }
-
-    st.write("### Accelerometer Data:")
-    st.write(f"X: {accelerometer_data['x']}")
-    st.write(f"Y: {accelerometer_data['y']}")
-    st.write(f"Z: {accelerometer_data['z']}")
-
-if __name__ == "__main__":
-    main()
 
 
 def main():
-    st.title('Posture detection System')
+    st.title('Posture Management System')
 
     task = st.sidebar.selectbox(
         'Task',
@@ -64,11 +47,11 @@ def main():
     )
 
     if task == 'Register Patient':
-        register_patient()
+        register_user()
     elif task == 'Schedule Appointment':
         schedule_appointment()
     elif task == 'View Patient Info':
-        view_patient_info()
+        view_user_info()
 
 if __name__ == "__main__":
     main()
