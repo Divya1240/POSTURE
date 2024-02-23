@@ -11,7 +11,7 @@ def register_patient():
         st.success(f'Patient {name} registered successfully!')
 def schedule_appointment():
     st.subheader('Schedule Appointment')
-    patient_id = st.text_input('Patient ID')
+    patient_id = st.text_input('User ID')
     date = st.date_input('Date')
     time = st.time_input('Time')
     doctor = st.text_input('Doctor')
@@ -20,10 +20,10 @@ def schedule_appointment():
         st.success('Appointment scheduled successfully!')
 def view_patient_info():
     st.subheader('View Patient Information')
-    patient_id = st.text_input('Patient ID')
+    patient_id = st.text_input('User ID')
     if st.button('View'):
         # Here you can fetch patient information from a database and display it
-        st.write(f'Patient ID: {patient_id}')
+        st.write(f'User ID: {patient_id}')
         st.write('Name: John Doe')
         st.write('Age: 35')
         st.write('Gender: Male')
