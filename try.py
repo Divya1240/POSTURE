@@ -1,35 +1,29 @@
 import streamlit as st
-
 def register_patient():
-    st.subheader('User Registration')
+    st.subheader('Patient Registration')
     name = st.text_input('Name')
     age = st.number_input('Age', min_value=0, max_value=150, step=1)
     gender = st.selectbox('Gender', ['Male', 'Female', 'Other'])
     address = st.text_area('Address')
     contact = st.text_input('Contact Number')
-
     if st.button('Register'):
         # Here you can perform actions like saving patient data to a database
         st.success(f'Patient {name} registered successfully!')
-
 def schedule_appointment():
     st.subheader('Schedule Appointment')
-    USER_id = st.text_input('USER ID')
+    patient_id = st.text_input('Patient ID')
     date = st.date_input('Date')
     time = st.time_input('Time')
     doctor = st.text_input('Doctor')
-
     if st.button('Schedule'):
         # Here you can perform actions like saving appointment data to a database
         st.success('Appointment scheduled successfully!')
-
 def view_patient_info():
-    st.subheader('View USER Information')
-    patient_id = st.text_input('USER_ID')
-
+    st.subheader('View Patient Information')
+    patient_id = st.text_input('Patient ID')
     if st.button('View'):
         # Here you can fetch patient information from a database and display it
-        st.write(f'User ID: {User_id}')
+        st.write(f'Patient ID: {patient_id}')
         st.write('Name: John Doe')
         st.write('Age: 35')
         st.write('Gender: Male')
@@ -37,24 +31,22 @@ def view_patient_info():
         st.write('Contact: 555-1234')
 
 
-
 def main():
-    st.title('Posture Management System')
+    st.title('Posture detection System')
 
     task = st.sidebar.selectbox(
         'Task',
         ['Register Patient', 'Schedule Appointment', 'View Patient Info']
     )
-
-    if task == 'Register USER':
-        register_user()
+    if task == 'Register Patient':
+        register_patient()
     elif task == 'Schedule Appointment':
         schedule_appointment()
     elif task == 'View Patient Info':
-        view_user_info()
-
+        view_patient_info()
 if __name__ == "__main__":
     main()
+
 
 
 
