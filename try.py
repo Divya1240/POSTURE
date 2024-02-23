@@ -1,6 +1,6 @@
 import streamlit as st
 def register_patient():
-    st.subheader('Patient Registration')
+    st.subheader('User Registration')
     name = st.text_input('Name')
     age = st.number_input('Age', min_value=0, max_value=150, step=1)
     gender = st.selectbox('Gender', ['Male', 'Female', 'Other'])
@@ -32,17 +32,17 @@ def view_patient_info():
 
 
 def main():
-    st.title('Posture detection System')
+    st.title('Posture Management System')
 
     task = st.sidebar.selectbox(
         'Task',
-        ['Register Patient', 'Schedule Appointment', 'View Patient Info']
+        ['Register User', 'Schedule Appointment', 'View User Info']
     )
-    if task == 'Register Patient':
+    if task == 'Register User':
         register_patient()
     elif task == 'Schedule Appointment':
         schedule_appointment()
-    elif task == 'View Patient Info':
+    elif task == 'View User Info':
         view_patient_info()
 if __name__ == "__main__":
     main()
