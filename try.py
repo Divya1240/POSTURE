@@ -24,7 +24,7 @@ def schedule_appointment():
         st.success('Appointment scheduled successfully!')
 
 def view_patient_info():
-    st.subheader('View Patient Information')
+    st.subheader('View USER Information')
     patient_id = st.text_input('Patient ID')
 
     if st.button('View'):
@@ -46,7 +46,7 @@ def main():
         ['Register Patient', 'Schedule Appointment', 'View Patient Info']
     )
 
-    if task == 'Register Patient':
+    if task == 'Register USER':
         register_user()
     elif task == 'Schedule Appointment':
         schedule_appointment()
