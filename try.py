@@ -37,6 +37,25 @@ def view_patient_info():
         st.write('Contact: 555-1234')
 
 def main():
+    st.title("Accelerometer Data Display")
+
+    # Assuming you have the accelerometer data as a dictionary
+    accelerometer_data = {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    }
+
+    st.write("### Accelerometer Data:")
+    st.write(f"X: {accelerometer_data['x']}")
+    st.write(f"Y: {accelerometer_data['y']}")
+    st.write(f"Z: {accelerometer_data['z']}")
+
+if __name__ == "__main__":
+    main()
+
+
+def main():
     st.title('Posture detection System')
 
     task = st.sidebar.selectbox(
